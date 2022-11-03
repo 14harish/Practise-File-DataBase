@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" name="" id="hidden" accept=".pdf" />
+    <input type="hidden" name="" id="textattachment">
+    <button id="btn" onclick="downloadFile()">download</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+             $('#select').on('change',function(e){
+                var file=e.target.file[0];
+                var reader=new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload=function(){
+                    var inputData=reader.result;
+                    var replaceValue=[inputData.split(',')[0]]
+                    var base24String=input.replace(replaceValue+",");
+                    console.log(base24String);
+                    $('textattachment').val(base24String);
+                }
+             })
+
+        })
+        function downloadPDF(data,filename){
+            const linkSource=`data:application/pdf;base64,${data}`;
+            const downloadLink =document.createElement('a');
+            const Filename=filename+".pdf";
+
+            downloadLink.href=linkSource;
+            downloadLink.download=filename;
+            downloadLink.click();
+        }
+        function downloadFile(){
+            downloadPDF($('textattachment').val(),"Test");
+        }
+    </script>
+</body>
+</html>
